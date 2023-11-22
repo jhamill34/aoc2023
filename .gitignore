@@ -1,0 +1,5 @@
+target/
+Makefile
+compile_commands/
+compile_commands.json
+.cache/
