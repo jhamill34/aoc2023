@@ -11,3 +11,6 @@ group "common"
 group "day1"
     include "day1/build.lua"
 
+group "day2"
+    include "day2/build.lua"
+

@@ -18,7 +18,7 @@ int handleRange(std::vector<char> data, size_t start, size_t end) {
 	return val;
 }
 
-std::vector<int> Parse(std::vector<char> data) {
+std::vector<int> Parse(const std::vector<char>& data) {
 	uint8_t place = 0;
 	size_t start = 0;
 	size_t current = 0;

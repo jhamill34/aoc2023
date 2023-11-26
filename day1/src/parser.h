@@ -2,5 +2,5 @@
 
 #include <vector>
 
-std::vector<int> Parse(std::vector<char> data);
+std::vector<int> Parse(const std::vector<char>& data);
 
