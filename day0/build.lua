@@ -1,5 +1,5 @@
 ---@diagnostic disable: undefined-global
-project "day1"
+project "day0"
     kind "ConsoleApp"
     language "C++"
     cppdialect "C++20"
