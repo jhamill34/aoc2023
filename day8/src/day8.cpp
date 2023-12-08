@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <map>
+#include <numeric>
 
 const char* START_NODE = "AAA";
 const char* END_NODE = "ZZZ";
@@ -116,9 +117,13 @@ void part1(CamelPouch pouch) {
 	std::cout << "Total Steps: " << counter << "\n";
 }
 
-bool areAllDone(std::vector<std::string>& nodes) {
-	for (auto node : nodes) {
-		if (*(node.end() - 1) != 'Z') {
+bool allVisited(std::map<std::string, bool>& visited) {
+	if (visited.size() == 0) {
+		return false;
+	}
+
+	for (auto e : visited) {
+		if (!e.second) {
 			return false;
 		}
 	}
@@ -127,9 +132,78 @@ bool areAllDone(std::vector<std::string>& nodes) {
 }
 
 void part2(CamelPouch pouch) {
-	// TODO: Something to do with LCM and loop sizes....
-}
+	std::vector<std::string> startNodes;
+	std::vector<int> loopSizes;
 
+	for (auto e : pouch.graph) {
+		if (*(e.first.end() - 1) == 'A') {
+			startNodes.push_back(e.first);
+		}
+	}
+
+	for (auto node : startNodes) {
+		int count = 0;
+		int i = 0; 
+		std::string current = node;
+		std::map<std::string, bool> visited;
+		std::map<std::string, int> distances;
+
+		while(!allVisited(visited)) {
+			step(pouch, i, &current);
+			count++;
+			if (*(current.end() - 1) == 'Z') {
+				if (visited.find(current) == visited.end()) {
+					visited[current] = false;
+				} else {
+					visited[current] = true;
+				}
+			}
+
+			if (distances[current] == 0) {
+				distances[current] = count;
+			}
+
+			i = (i + 1) % pouch.steps.size();
+		}
+
+		// Some assertions of the assumptions to be able to use LCM
+		if (visited.size() != 1) {
+			std::cout << "End nodes should be unique for each start " << node << "\n";
+			exit(1);
+		}
+
+		int startToEnd = distances[current];
+		int loopLength = count - startToEnd;
+
+		if (startToEnd != loopLength) {
+			std::cout << "Expected the distance from start to end to be equal to loop length: " << node << "\n";
+			std::cout << "count: " << count << "\n";
+			std::cout << "startToEnd: " << startToEnd << "\n";
+			std::cout << "loopLength: " << loopLength << "\n";
+			exit(1);
+		}
+
+		loopSizes.push_back(loopLength);
+	}
+
+
+	// At this point we know our assertions for each starting node will be true. 
+	// LCM only works if we can assume that the distance to the single end node is 
+	// equal to a loop length effectively being the same thing. Now we model 
+	// pure loops and treat this as the following classic math problem:
+	// "Train A is on a track of length X and Train B is on a track of length Y traveling at the 
+	// same speed both on a loop track. 
+	//
+	// How long will it take for both to reach their destinations at the same time?
+	//
+	// Answer: LCM(X, Y) * speeds"
+	long lcm = loopSizes[0];
+	for (int i = 1; i < loopSizes.size(); i++) {
+		lcm = std::lcm(lcm, loopSizes[i]);
+	}
+
+	std::cout << "LCM: " << lcm << "\n";
+}
 
 int main(int argc, char *argv[]) { 
 	std::vector<char> input = Common::ReadFile(argv[1]);
