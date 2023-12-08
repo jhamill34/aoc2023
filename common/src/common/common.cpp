@@ -27,10 +27,10 @@ namespace Common {
 		return ch == ' ' || ch == '\t';
 	}
 
-	std::string parseIdentifier(std::vector<char>& input, int& current) {
+	std::string parseIdentifier(std::vector<char>& input, int& current, bool includeDigits) {
 		std::string identifier = "";
 
-		while(isAlpha(input[current])) {
+		while(isAlpha(input[current]) || (includeDigits && isNumeric(input[current]))) {
 			identifier += input[current];
 			current++;
 		}
@@ -90,7 +90,7 @@ namespace Common {
 
 	void matchKeyword(std::vector<char>& input, int& current, int& line, const char* keyword) {
 		int start = current;
-		std::string word = parseIdentifier(input, current);
+		std::string word = parseIdentifier(input, current, false);
 
 		if (word != keyword) {
 			std::cout << "Expected \"" << keyword << "\" keyword at position " << start << " line " << line << "\n";

@@ -11,7 +11,7 @@ namespace Common {
 
 	bool isWhitespace(char ch);
 
-	std::string parseIdentifier(std::vector<char>& input, int& current);
+	std::string parseIdentifier(std::vector<char>& input, int& current, bool includeDigits);
 
 	void consumeSpace(std::vector<char>& input, int& current);
 
