@@ -56,13 +56,23 @@ namespace Common {
 
 	long parseNumber(std::vector<char>& input, int& current) {
 		std::string digits = "";
+		bool isNegative = false;
+
+		if (input[current] == '-') {
+			isNegative = true;
+			current++;
+		}
 
 		while (isNumeric(input[current])) {
 			digits += input[current];
 			current++;
 		}
 
-		return std::stol(digits);
+		if (isNegative) {
+			return -std::stol(digits);
+		} else {
+			return std::stol(digits);
+		}
 	}
 
 	void parseNumberList(std::vector<char>& input, int& current, std::vector<long>* numbers) {
@@ -71,7 +81,7 @@ namespace Common {
 			exit(1);
 		}
 
-		while (isNumeric(input[current])) {
+		while (isNumeric(input[current]) || input[current] == '-') {
 			numbers->push_back(parseNumber(input, current));
 			consumeSpace(input, current);
 		}
