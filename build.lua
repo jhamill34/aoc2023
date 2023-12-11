@@ -38,3 +38,6 @@ group "day8"
 group "day9"
     include "day9/build.lua"
 
+group "day10"
+    include "day10/build.lua"
+
