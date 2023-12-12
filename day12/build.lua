@@ -1,5 +1,5 @@
 ---@diagnostic disable: undefined-global
-project "day8"
+project "day12"
     kind "ConsoleApp"
     language "C++"
     cppdialect "C++20"
@@ -25,9 +25,9 @@ project "day8"
 
 	filter "configurations:Part2"
 		defines "PART2"
-		runtime "Debug"
-		symbols "on"
-
+		runtime "Release"
+		symbols "off"
+		optimize "speed"
 
 
 

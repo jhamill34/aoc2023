@@ -1,6 +1,6 @@
 ---@diagnostic disable: undefined-global
 workspace "Advent of Code"
-    configurations { "Debug", "Release", "Dist" }
+    configurations { "Part1", "Part2" }
     architecture "ARM64"
 
 OutputDir = "%{cfg.system}-%{cfg.architecture}/%{cfg.buildcfg}"
@@ -43,4 +43,7 @@ group "day10"
 
 group "day11"
     include "day11/build.lua"
+
+group "day12"
+    include "day12/build.lua"
 

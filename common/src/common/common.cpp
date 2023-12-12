@@ -38,13 +38,13 @@ namespace Common {
 		return identifier;
 	}
 
-	void consumeSpace(std::vector<char>& input, int& current) {
+	void consumeSpace(const std::vector<char>& input, int& current) {
 		while (isWhitespace(input[current])) {
 			current++;
 		}
 	}
 
-	void match(std::vector<char>& input, int& current, int line, char ch) {
+	void match(const std::vector<char>& input, int& current, int line, const char ch) {
 		if (input[current] == ch) {
 			current++;
 			return;
@@ -54,7 +54,7 @@ namespace Common {
 		exit(1);
 	}
 
-	long parseNumber(std::vector<char>& input, int& current) {
+	long parseNumber(const std::vector<char>& input, int& current) {
 		std::string digits = "";
 		bool isNegative = false;
 
@@ -87,7 +87,7 @@ namespace Common {
 		}
 	}
 
-	void consumeNewlines(std::vector<char>& input, int& current, int& line) {
+	void consumeNewlines(const std::vector<char>& input, int& current, int& line) {
 		consumeSpace(input, current);
 
 		while (input[current] == '\n') {

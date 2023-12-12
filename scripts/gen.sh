@@ -26,34 +26,54 @@ project "day${DAY}"
 
     links { "common" }
 
-    filter "configurations:Debug"
-        defines "DEBUG"
-        runtime "Debug"
-        symbols "on"
+	filter "configurations:Part1"
+		defines "PART1"
+		runtime "Debug"
+		symbols "on"
 
-    filter "configurations:Release"
-        defines "RELEASE"
-        runtime "Release"
-        symbols "on"
-        optimize "on"
-
-    filter "configurations:Dist"
-        defines "DIST"
-        runtime "Release"
-        symbols "off"
-        optimize "on"
+	filter "configurations:Part2"
+		defines "PART2"
+		runtime "Debug"
+		symbols "on"
 BUILD
 
 
 cat <<-SOURCE  > day${DAY}/src/day${DAY}.cpp
 #include "common/common.h"
 
-#include <cstdio>
+#include <iostream>
+
+void Parse(const std::vector<char>& data) {
+    int current = 0, line = 1;
+
+    while (current < data.size()) {
+        current++;
+    }
+}
+
+void part1() {
+    std::cout << "not implemented\n";
+    exit(1);
+}
+
+void part2() {
+    std::cout << "not implemented\n";
+    exit(1);
+}
 
 int main(int argc, char *argv[]) { 
-    // char *data = read_file(argv[1]);
+    std::cout << "Welcome to day ${DAY}!\n";
+    std::vector<char> data = Common::ReadFile(argv[1]);
 
-    printf("Welcome to day ${DAY}!\n");
+    Parse(data);
+
+#ifdef PART1 
+    part1();
+#endif
+
+#ifdef PART2
+    part2();
+#endif
 
     return 0; 
 }

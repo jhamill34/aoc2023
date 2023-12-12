@@ -18,19 +18,15 @@ project "day2"
 
     links { "common" }
 
-    filter "configurations:Debug"
-        defines "DEBUG"
-        runtime "Debug"
-        symbols "on"
+	filter "configurations:Part1"
+		defines "PART1"
+		runtime "Debug"
+		symbols "on"
 
-    filter "configurations:Release"
-        defines "RELEASE"
-        runtime "Release"
-        symbols "on"
-        optimize "on"
+	filter "configurations:Part2"
+		defines "PART2"
+		runtime "Debug"
+		symbols "on"
 
-    filter "configurations:Dist"
-        defines "DIST"
-        runtime "Release"
-        symbols "off"
-        optimize "on"
+
+

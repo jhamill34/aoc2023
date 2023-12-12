@@ -16,20 +16,13 @@ project "common"
 
 	includedirs { "src" }
 
-	filter "configurations:Debug"
-		defines "DEBUG"
+	filter "configurations:Part1"
+		defines "PART1"
 		runtime "Debug"
 		symbols "on"
 
-	filter "configurations:Release"
-		defines "RELEASE"
-		runtime "Release"
+	filter "configurations:Part2"
+		defines "PART2"
+		runtime "Debug"
 		symbols "on"
-		optimize "on"
-
-	filter "configurations:Dist"
-		defines "DIST"
-		runtime "Release"
-		symbols "off"
-		optimize "on"
 

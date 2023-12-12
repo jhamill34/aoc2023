@@ -210,8 +210,16 @@ std::vector<Hand> Parse2(std::vector<char> &data) {
 
 int main(int argc, char *argv[]) { 
 	std::vector<char> data = Common::ReadFile(argv[1]);
-	// auto hands = Parse1(data);
-	auto hands = Parse2(data);
+
+	std::vector<Hand> hands;
+
+#ifdef PART1 
+	hands = Parse1(data);
+#endif
+
+#ifdef PART2
+	hands = Parse2(data);
+#endif
 
 	std::stable_sort(hands.begin(), hands.end(), handComp);
 
