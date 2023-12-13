@@ -79,44 +79,100 @@ bool isColSymmetric(const map_t& map, const int col, const int center) {
 	return true;
 }
 
+long findColSym(const map_t& map) {
+	for (int i = 0; i < map[0].size() - 1; i++) {
+		int symCount = 0;
+		for (int j = 0; j < map.size(); j++) {
+			if (isRowSymmetric(map, j, i)) {
+				symCount++;
+			}
+		}
+
+		if (symCount == map.size()) {
+			// std::cout << "Column Symmetric at " << i + 1 << "\n";
+			return (i + 1);
+		}
+	}
+
+	return 0;
+}
+
+long findRowSym(const map_t& map) {
+	for (int i = 0; i < map.size() - 1; i++) {
+		int symCount = 0;
+		for (int j = 0; j < map[0].size(); j++) {
+			if (isColSymmetric(map, j, i)) {
+				symCount++;
+			}
+		}
+
+		if (symCount == map[0].size()) {
+			// std::cout << "Row Symmetric at " << i + 1 << "\n";
+			return (100 * (i + 1));
+		}
+	}
+
+	return 0;
+}
+
+long findSym(const map_t& map) {
+	long val = findColSym(map);
+	if (val == 0) {
+		val = findRowSym(map);
+	}
+
+	return val;
+}
+
 void part1(const std::vector<map_t>& maps) {
 	long total = 0;
 	for (auto map : maps) {
-		for (int i = 0; i < map[0].size() - 1; i++) {
-			int symCount = 0;
-			for (int j = 0; j < map.size(); j++) {
-				if (isRowSymmetric(map, j, i)) {
-					symCount++;
-				}
-			}
-
-			if (symCount == map.size()) {
-				// std::cout << "Column Symmetric at " << i + 1 << "\n";
-				total += (i + 1);
-			}
-		}
-
-		for (int i = 0; i < map.size() - 1; i++) {
-			int symCount = 0;
-			for (int j = 0; j < map[0].size(); j++) {
-				if (isColSymmetric(map, j, i)) {
-					symCount++;
-				}
-			}
-
-			if (symCount == map[0].size()) {
-				// std::cout << "Row Symmetric at " << i + 1 << "\n";
-				total += (100 * (i + 1));
-			}
-		}
+		total += findSym(map);
 	}
 
 	std::cout << "Total: " << total << "\n";
 }
 
-void part2() {
-    std::cout << "not implemented\n";
-    exit(1);
+long fix(map_t& map) {
+	long original = findSym(map);
+	for (int i = 0; i < map.size(); i++) {
+		for (int j = 0; j < map[0].size(); j++) {
+			if (map[i][j] == ROCK) {
+				map[i][j] = ASH;
+				long val = findRowSym(map);
+				if (val == 0 || val == original) {
+					val = findColSym(map);
+				}
+				map[i][j] = ROCK;
+				if (val > 0 && val != original) {
+					return val;
+				}
+			} else {
+				map[i][j] = ROCK;
+				long val = findColSym(map);
+				if (val == 0 || val == original) {
+					val = findRowSym(map);
+				}
+				map[i][j] = ASH;
+				if (val > 0 && val != original) {
+					return val;
+				}
+			}
+		}
+	}
+
+	return 0;
+}
+
+void part2(const std::vector<map_t>& maps) {
+	std::cout << "WARNING: Not working...\n";
+	long total = 0;
+	for (auto map : maps) {
+		long val = fix(map);
+		total += val;
+	}
+
+	std::cout << "Total: " << total << "\n";
 }
 
 int main(int argc, char *argv[]) { 
@@ -130,7 +186,7 @@ int main(int argc, char *argv[]) {
 #endif
 
 #ifdef PART2
-    part2();
+    part2(maps);
 #endif
 
     return 0; 
